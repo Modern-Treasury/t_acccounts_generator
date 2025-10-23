@@ -36,7 +36,7 @@ Uses Ollama's OpenAI-compatible API endpoint, supporting various open-source mod
 
 ```python
 from models import ChartOfAccounts
-from openai_client import OpenAIClient
+from clients import OpenAIClient
 
 client = OpenAIClient(model='gpt-oss:20b')
 chart = client.generate(
@@ -50,7 +50,7 @@ Uses Ollama's native API for Gemma models with built-in structured output suppor
 
 ```python
 from models import ChartOfAccounts
-from gemma_client import GemmaClient
+from clients import GemmaClient
 
 client = GemmaClient(model='gemma3')
 chart = client.generate(
@@ -64,7 +64,7 @@ Uses DeepSeek reasoning models through Ollama for sophisticated financial analys
 
 ```python
 from models import ChartOfAccounts
-from deepseek_client import DeepSeekClient
+from clients import DeepSeekClient
 
 client = DeepSeekClient(model='deepseek-r1:8b')
 chart = client.generate(

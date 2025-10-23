@@ -6,9 +6,7 @@ Tests all registered LLM clients against expected results.
 
 from pathlib import Path
 from typing import Any, Dict, List, Type
-from openai_client import OpenAIClient
-from gemma_client import GemmaClient
-from deepseek_client import DeepSeekClient
+from clients import OpenAIClient, GemmaClient, DeepSeekClient
 from models import ChartOfAccounts
 
 # Registry of available LLM clients
