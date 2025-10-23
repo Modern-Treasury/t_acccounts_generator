@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import Literal
+from typing import Literal, List
 
 
 class LedgerAccount(BaseModel):
@@ -16,3 +16,10 @@ class LedgerAccount(BaseModel):
     
     # Whether the account is credit-normal or debit-normal
     normal_balance: Literal["credit", "debit"] = Field(..., description="Whether the account is credit-normal or debit-normal. Acceptable values are either credit or debit.")
+
+
+class ChartOfAccounts(BaseModel):
+    """A Chart of Accounts containing multiple Ledger Accounts."""
+    
+    # List of ledger accounts
+    accounts: List[LedgerAccount] = Field(..., description="List of ledger accounts in the chart of accounts")
