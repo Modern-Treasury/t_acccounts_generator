@@ -1,3 +1,0 @@
-Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
-Include accounts that represent the user funds held in an FBO account and accounts that represent user liabilities.
-Create the minimum number of accounts to satisfy the requirements.
