@@ -4,9 +4,10 @@ Test script for LLM clients using test cases from test_cases folder.
 Tests all registered LLM clients against expected results.
 """
 
+import argparse
 import yaml
 from pathlib import Path
-from typing import Any, Dict, List, Type
+from typing import Any, Dict, Type
 from clients import OpenAIClient, GemmaClient, DeepSeekClient
 from models import ChartOfAccounts, FundFlow
 
@@ -18,91 +19,44 @@ LLM_CLIENTS: Dict[str, Type] = {
 }
 
 
-def load_test_cases() -> List[Dict[str, Any]]:
-    """Load all test cases from the test_cases folder."""
-    test_cases = []
-    test_cases_dir = Path("test_cases")
-    
-    if not test_cases_dir.exists():
-        print("❌ test_cases directory not found!")
-        return []
-    
-    # Find all YAML files in the test_cases directory
-    yaml_files = list(test_cases_dir.glob("*.yaml")) + list(test_cases_dir.glob("*.yml"))
-    
-    if not yaml_files:
-        print("❌ No YAML test files found in test_cases directory!")
-        return []
-    
-    print(f"📁 Found {len(yaml_files)} test file(s)")
-    
-    for yaml_file in sorted(yaml_files):
-        try:
-            with open(yaml_file, 'r') as f:
-                data = yaml.safe_load(f)
-                test_case = {
-                    'chart_of_accounts_prompt': data['chart_of_accounts_prompt'].strip(),
-                    'fund_flow_prompt': data['fund_flow_prompt'].strip(),
-                    'filename': yaml_file.name
-                }
-                test_cases.append(test_case)
-                print(f"  ✅ Loaded: {yaml_file.name}")
-        except Exception as e:
-            print(f"  ❌ Failed to load {yaml_file.name}: {e}")
-    
-    return test_cases
-
-
-def analyze_chart_of_accounts(result: ChartOfAccounts) -> Dict[str, Any]:
-    """
-    Analyze ChartOfAccounts result and return statistics.
+def load_test_case(file_path: str) -> Dict[str, Any]:
+    """Load a test case from a YAML file.
     
     Args:
-        result: The ChartOfAccounts object returned by the LLM
-    
+        file_path: Path to the YAML test case file
+        
     Returns:
-        Dictionary with analysis statistics
+        Dictionary containing the test case data
+        
+    Raises:
+        FileNotFoundError: If the file doesn't exist
+        yaml.YAMLError: If the file is not valid YAML
+        KeyError: If required keys are missing
     """
-    stats = {}
+    test_file = Path(file_path)
     
-    accounts = result.accounts
-    stats['total_accounts'] = len(accounts)
+    if not test_file.exists():
+        raise FileNotFoundError(f"Test case file not found: {file_path}")
     
-    # Count by normal balance
-    debit_accounts = [a for a in accounts if a.normal_balance == 'debit']
-    credit_accounts = [a for a in accounts if a.normal_balance == 'credit']
-    stats['debit_accounts'] = len(debit_accounts)
-    stats['credit_accounts'] = len(credit_accounts)
+    print(f"📁 Loading test case: {test_file.name}")
     
-    # Count by currency
-    currencies = {}
-    for account in accounts:
-        currency = account.currency
-        currencies[currency] = currencies.get(currency, 0) + 1
-    stats['currencies'] = currencies
+    with open(test_file, 'r') as f:
+        data = yaml.safe_load(f)
     
-    return stats
-
-
-def analyze_fund_flow(result: FundFlow) -> Dict[str, Any]:
-    """
-    Analyze FundFlow result and return statistics.
+    # Validate required keys
+    required_keys = ['chart_of_accounts_prompt', 'fund_flow_prompt']
+    missing_keys = [key for key in required_keys if key not in data]
+    if missing_keys:
+        raise KeyError(f"Missing required keys in test case: {', '.join(missing_keys)}")
     
-    Args:
-        result: The FundFlow object returned by the LLM
+    test_case = {
+        'chart_of_accounts_prompt': data['chart_of_accounts_prompt'].strip(),
+        'fund_flow_prompt': data['fund_flow_prompt'].strip(),
+        'filename': test_file.name
+    }
     
-    Returns:
-        Dictionary with analysis statistics
-    """
-    stats = {}
-    
-    transactions = result.transactions
-    stats['total_transactions'] = len(transactions)
-    
-    total_entries = sum(len(tx.entries) for tx in transactions)
-    stats['total_entries'] = total_entries
-    
-    return stats
+    print(f"  ✅ Loaded: {test_file.name}")
+    return test_case
 
 
 def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fund_flow_prompt: str, test_name: str) -> Dict[str, Any]:
@@ -117,7 +71,7 @@ def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fun
         test_name: Name of the test case
     
     Returns:
-        Dictionary with results and statistics for both prompts
+        Dictionary with results for both prompts
     """
     print(f"\n--- {client_name} [{test_name}] ---")
     
@@ -125,15 +79,6 @@ def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fun
         # Step 1: Generate ChartOfAccounts
         print(f"  🔹 Step 1: Generating ChartOfAccounts...")
         chart_of_accounts = client.generate(chart_of_accounts_prompt, ChartOfAccounts)
-        
-        # Analyze the ChartOfAccounts
-        chart_stats = analyze_chart_of_accounts(chart_of_accounts)
-        
-        print(f"  Generated ChartOfAccounts with {chart_stats['total_accounts']} account(s):")
-        print(f"    📊 Statistics:")
-        print(f"      • Debit accounts: {chart_stats['debit_accounts']}")
-        print(f"      • Credit accounts: {chart_stats['credit_accounts']}")
-        print(f"      • Currencies: {dict(chart_stats['currencies'])}")
         
         print(f"\n    📋 Account Details:")
         for i, account in enumerate(chart_of_accounts.accounts):
@@ -154,13 +99,6 @@ def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fun
         
         fund_flow = client.generate(full_prompt2, FundFlow)
         
-        # Analyze the FundFlow
-        flow_stats = analyze_fund_flow(fund_flow)
-        
-        print(f"  Generated FundFlow with {flow_stats['total_transactions']} transaction(s):")
-        print(f"    📊 Statistics:")
-        print(f"      • Total entries: {flow_stats['total_entries']}")
-        
         print(f"\n    💸 Transaction Details:")
         for i, transaction in enumerate(fund_flow.transactions):
             print(f"      Transaction {i+1}: {transaction.description}")
@@ -172,8 +110,6 @@ def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fun
             'success': True,
             'chart_of_accounts': chart_of_accounts,
             'fund_flow': fund_flow,
-            'chart_stats': chart_stats,
-            'flow_stats': flow_stats
         }
         
     except Exception as e:
@@ -182,9 +118,7 @@ def run_client_test(client_name: str, client, chart_of_accounts_prompt: str, fun
         traceback.print_exc()
         return {
             'success': False,
-            'error': str(e),
-            'chart_stats': None,
-            'flow_stats': None
+            'error': str(e)
         }
 
 
@@ -199,7 +133,7 @@ def run_test_case(test_case: Dict[str, Any], clients: Dict[str, Any]) -> Dict[st
     Returns:
         Dictionary with results for each client
     """
-    test_name = test_case['filename']
+    test_name = test_case["filename"]
     chart_of_accounts_prompt = test_case["chart_of_accounts_prompt"]
     fund_flow_prompt = test_case["fund_flow_prompt"]
     
@@ -220,33 +154,37 @@ def run_test_case(test_case: Dict[str, Any], clients: Dict[str, Any]) -> Dict[st
 
 def main():
     """Main test runner."""
+    parser = argparse.ArgumentParser(
+        description="Test LLM clients with a specific test case YAML file"
+    )
+    parser.add_argument(
+        "test_case",
+        type=str,
+        help="Path to the test case YAML file (e.g., test_cases/digital_wallet.yaml)"
+    )
+    
+    args = parser.parse_args()
+    
     print("🧪 Starting LLM Client Analysis")
     print("=" * 60)
     
-    # Load all test cases
-    test_cases = load_test_cases()
+    # Load the specified test case
+    try:
+        test_case = load_test_case(args.test_case)
+    except (FileNotFoundError, yaml.YAMLError, KeyError) as e:
+        print(f"❌ Error loading test case: {e}")
+        return 1
     
-    if not test_cases:
-        print("❌ No test cases loaded. Exiting.")
-        return
-    
-    print(f"\n🔧 Initializing {len(LLM_CLIENTS)} LLM clients...")
+    # Initialize clients
     clients = {}
     for client_name, client_class in LLM_CLIENTS.items():
-        try:
-            clients[client_name] = client_class()
-            print(f"  ✅ {client_name} initialized successfully")
-        except Exception as e:
-            print(f"  ⚠️  {client_name} initialization failed: {e}")
-            print(f"    (Skipping {client_name} for this run)")
+        clients[client_name] = client_class()
     
-    if not clients:
-        print("❌ No clients initialized successfully. Exiting.")
-        return
-
-    for test_case in test_cases:
-        run_test_case(test_case, clients)
+    # Run the test case
+    run_test_case(test_case, clients)
+    
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    exit(main())

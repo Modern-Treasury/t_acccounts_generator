@@ -1,14 +1,15 @@
-# Chart of Accounts Generator
+# Chart of Accounts & Fund Flow Generator
 
-A Python project for generating and analyzing structured financial charts of accounts using multiple LLMs through Ollama. Compare how different AI models approach financial accounting problems.
+A Python project for generating and analyzing structured financial charts of accounts and fund flows using multiple LLMs. Compare how different AI models approach financial accounting problems with a two-step workflow: first generating a chart of accounts, then creating fund flows based on those accounts.
 
 ## Features
 
 - **Multiple LLM Support**: OpenAI-compatible, Gemma, and DeepSeek models
 - **Structured Output**: Type-safe generation using Pydantic models
-- **Comparative Analysis**: Run the same prompts across multiple models and compare results
-- **Flexible Test Framework**: Plain text test cases with automatic model comparison
-- **Rich Statistics**: Account counts, balance distributions, and performance metrics
+- **Two-Step Workflow**: Generate ChartOfAccounts, then FundFlow transactions based on those accounts
+- **YAML Test Cases**: Structured test cases with separate prompts for each step
+- **Flexible Test Framework**: Run specific test cases with command-line arguments
+- **Rich Output**: Detailed account and transaction information with balance tracking
 - **Local Execution**: All models run locally via Ollama (no API keys required for most models)
 
 ## Installation
@@ -21,13 +22,22 @@ uv sync
 
 ## Quick Start
 
-Run the analysis system to compare all available models:
+Run the test script with a specific test case:
 
 ```bash
-uv run python test_clients.py
+# Run the digital wallet test case
+uv run python test_clients.py test_cases/digital_wallet.yaml
+
+# Run the payroll test case
+uv run python test_clients.py test_cases/payroll.yaml
+
+# View help
+uv run python test_clients.py --help
 ```
 
-This will test all initialized LLM clients against the test cases and show comparative results.
+The script performs a two-step process:
+1. **Step 1**: Generates a `ChartOfAccounts` from the first prompt
+2. **Step 2**: Generates a `FundFlow` using the chart of accounts from step 1
 
 ## LLM Clients
 
@@ -86,32 +96,77 @@ Represents a single financial account:
 Contains a collection of related ledger accounts:
 - `accounts`: List of `LedgerAccount` objects
 
+### LedgerEntry
+Represents a single entry in a transaction:
+- `account_id`: The account affected by this entry
+- `amount`: The amount of the entry
+- `currency`: The currency of the entry
+
+### LedgerTransaction
+Represents a complete financial transaction:
+- `description`: Description of the transaction
+- `entries`: List of `LedgerEntry` objects (must balance)
+
+### FundFlow
+Represents a business process as a series of transactions:
+- `transactions`: List of `LedgerTransaction` objects
+
 ## Test Cases
 
-Add new test scenarios by creating `.txt` files in the `test_cases/` directory:
+Test cases are defined in YAML format in the `test_cases/` directory:
 
 ```
 test_cases/
-├── digital_wallet_chart_of_accounts.txt
-└── your_new_test_case.txt
+├── digital_wallet.yaml
+├── payroll.yaml
+└── your_new_test_case.yaml
 ```
 
-Each file contains a plain text prompt that will be sent to all available models for comparison.
+### Test Case Format
 
-## Analysis Output
+Each YAML file must contain two prompts:
 
-The system provides rich comparative analysis:
+```yaml
+chart_of_accounts_prompt: |
+  Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+  Include accounts that represent the user funds held in an FBO account and accounts that represent user liabilities.
+  Create the minimum number of accounts to satisfy the requirements.
 
+fund_flow_prompt: |
+  Given the following chart of accounts, generate a FundFlow that represents the business process of a user depositing funds into their digital wallet.
+  The FundFlow should show the ledger transactions needed to record a $100 USD deposit.
 ```
-📊 Statistics:
-  • Debit accounts: 4
-  • Credit accounts: 3  
-  • Currencies: {'USD': 7}
 
+### Creating New Test Cases
+
+1. Create a new `.yaml` file in `test_cases/`
+2. Add both `chart_of_accounts_prompt` and `fund_flow_prompt` keys
+3. Run the test: `uv run python test_clients.py test_cases/your_new_test_case.yaml`
+
+## Output
+
+The system provides detailed output for both generation steps:
+
+### Step 1: Chart of Accounts
+```
 📋 Account Details:
-  Account 1: Cash
-    Description: Primary cash account for operations
+  Account 1: FBO Bank Account
+    Description: Bank account where user funds are held on behalf of users
     Currency: USD | Normal Balance: debit
+  Account 2: User 1 Liability
+    Description: Liability to User 1 for funds held in the platform
+    Currency: USD | Normal Balance: credit
+```
+
+### Step 2: Fund Flow
+```
+💸 Transaction Details:
+  Transaction 1: User 1 deposits $100 into digital wallet
+    Entry 1: Account=FBO Bank Account, Direction=debit, Amount=100 USD
+    Entry 2: Account=User 1 Liability, Direction=credit, Amount=100 USD
+  Transaction 2: User 1 sends $5 to User 2
+    Entry 1: Account=User 1 Liability, Direction=debit, Amount=5 USD
+    Entry 2: Account=User 2 Liability, Direction=credit, Amount=5 USD
 ```
 
 ## Supported Models
@@ -132,11 +187,12 @@ ollama pull deepseek-r1:8b
 ## Requirements
 
 - Python >= 3.14
-- Ollama running locally (http://localhost:11434)
+- Ollama running locally (http://localhost:11434) or OpenAI API key
 - Dependencies:
   - ollama >= 0.6.0
   - openai >= 1.0.0 
   - pydantic >= 2.12.3
+  - pyyaml >= 6.0.0
 
 ## Architecture
 
@@ -164,4 +220,13 @@ LLM_CLIENTS: Dict[str, Type] = {
 }
 ```
 
-The system will automatically detect and test the new client against all test cases.
+The system will automatically test the new client when running test cases.
+
+## Workflow
+
+The test framework implements a two-step workflow that mimics real accounting processes:
+
+1. **Define the Chart of Accounts**: The LLM generates appropriate accounts for the business scenario
+2. **Generate Fund Flows**: Using the defined accounts, the LLM creates realistic transaction flows
+
+This approach ensures that fund flows reference valid accounts from the chart, creating more realistic and testable outputs.

@@ -1,12 +1,12 @@
 chart_of_accounts_prompt: |
   Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, accepts pay-ins from employers,
   and initiates payouts to employees. All accounts are in USD.
-  The platform should have 2 employers. Each employer has 2 employees.
+  The platform should have 1 employer. The employer has 2 employees.
   Create the minimum number of accounts to satisfy the requirements.
 
 fund_flow_prompt: |
   Given the following chart of accounts, generate a FundFlow that includes transactions for the following events:
-  - The employees at employer 1 are owed $1000 USD in wages each.
+  - The employees are owed $1000 USD in wages each.
   - The employer pays the platform to fund payroll.
   - The platform pays the employees their wages.
   Generate the minimum number of transactions to satisfy the requirements.

@@ -1,9 +1,11 @@
 chart_of_accounts_prompt: |
   Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
   Include accounts that represent the user funds held in an FBO account and accounts that represent user liabilities.
+  Include accounts for 2 users so that they can send funds to each other.
   Create the minimum number of accounts to satisfy the requirements.
 
 fund_flow_prompt: |
-  Given the following chart of accounts, generate a FundFlow that represents the business process of a user depositing funds into their digital wallet.
-  The FundFlow should show the ledger transactions needed to record a $100 USD deposit.
-
+  Given the following chart of accounts, generate a FundFlow that represents the business process of a user depositing $100 into their digital wallet.
+  Then show that user sending $5 to another user.
+  Finally, show that the recipient can withdraw the $5 to their bank account.
+  All transactions should be in USD.
