@@ -1,0 +1,8 @@
+chart_of_accounts_prompt: |
+  Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+  Create the minimum number of accounts to satisfy the requirements.
+
+fund_flow_prompt: |
+  Given the following chart of accounts, generate a FundFlow that represents the business process of a user depositing $100 into their digital wallet.
+  Then, show that the recipient can withdraw the $5 to their bank account.
+  All transactions should be in USD.

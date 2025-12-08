@@ -4,13 +4,13 @@ A Python project for generating and analyzing structured financial charts of acc
 
 ## Features
 
-- **Multiple LLM Support**: OpenAI-compatible, Gemma, and DeepSeek models
+- **Multiple LLM Support**: OpenAI-compatible, Gemma, DeepSeek, and Amazon Bedrock models
 - **Structured Output**: Type-safe generation using Pydantic models
 - **Two-Step Workflow**: Generate ChartOfAccounts, then FundFlow transactions based on those accounts
 - **YAML Test Cases**: Structured test cases with separate prompts for each step
 - **Flexible Test Framework**: Run specific test cases with command-line arguments
 - **Rich Output**: Detailed account and transaction information with balance tracking
-- **Local Execution**: All models run locally via Ollama (no API keys required for most models)
+- **Flexible Deployment**: Local execution via Ollama or cloud-based via Amazon Bedrock
 
 ## Installation
 
@@ -22,14 +22,16 @@ uv sync
 
 ## Quick Start
 
-Run the test script with a specific test case:
+The test script uses Amazon Bedrock with the gpt-oss-120b model (us-east-1 region):
 
 ```bash
-# Run the digital wallet test case
-uv run python test_clients.py test_cases/digital_wallet.yaml
+# Set the API key as an environment variable
+export AWS_BEARER_TOKEN_BEDROCK=your_api_key
 
-# Run the payroll test case
+# Run test cases
+uv run python test_clients.py test_cases/digital_wallet.yaml
 uv run python test_clients.py test_cases/payroll.yaml
+uv run python test_clients.py test_cases/payroll_simple.yaml
 
 # View help
 uv run python test_clients.py --help
@@ -82,6 +84,42 @@ chart = client.generate(
     ChartOfAccounts
 )
 ```
+
+### BedrockClient
+Uses Amazon Bedrock's unified Converse API for access to all foundation models, including Claude, Llama, Nova, and OpenAI models through cross-region inference.
+
+```python
+import os
+from models import ChartOfAccounts
+from clients import BedrockClient
+
+# Set API key via environment variable
+os.environ['AWS_BEARER_TOKEN_BEDROCK'] = 'your_api_key'
+
+# Basic usage (uses environment variable)
+client = BedrockClient(
+    model='gpt-oss-120b',
+    region_name='us-east-1'
+)
+chart = client.generate(
+    "Generate a chart of accounts for a digital wallet platform",
+    ChartOfAccounts
+)
+```
+
+**Prerequisites for BedrockClient:**
+- Bedrock API key (set via `AWS_BEARER_TOKEN_BEDROCK` environment variable)
+- Access to Bedrock in your AWS region
+- Model access granted for specific models
+
+**Example Model IDs:**
+- Anthropic: `anthropic.claude-3-5-sonnet-20241022-v2:0`, `anthropic.claude-3-haiku-20240307-v1:0`
+- Meta Llama: `us.meta.llama3-3-70b-instruct-v1:0`, `us.meta.llama3-2-3b-instruct-v1:0`
+- Amazon Nova: `us.amazon.nova-lite-v1:0`, `us.amazon.nova-pro-v1:0`
+- Mistral: `mistral.mistral-large-2407-v1:0`
+- OpenAI (cross-region): Check Bedrock console for available OpenAI models in your region
+
+Note: The client uses Bedrock's unified Converse API, which works with all models without model-specific code.
 
 ## Data Models
 
@@ -187,8 +225,10 @@ ollama pull deepseek-r1:8b
 ## Requirements
 
 - Python >= 3.14
-- Ollama running locally (http://localhost:11434) or OpenAI API key
+- Ollama running locally (http://localhost:11434) for OpenAI/Gemma/DeepSeek clients
+- AWS account with Bedrock access (optional, for BedrockClient only)
 - Dependencies:
+  - boto3 >= 1.40.69
   - ollama >= 0.6.0
   - openai >= 1.0.0 
   - pydantic >= 2.12.3

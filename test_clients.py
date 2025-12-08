@@ -8,14 +8,23 @@ import argparse
 import yaml
 from pathlib import Path
 from typing import Any, Dict, Type
-from clients import OpenAIClient, GemmaClient, DeepSeekClient
+from clients import OpenAIClient, GemmaClient, DeepSeekClient, BedrockClient
 from models import ChartOfAccounts, FundFlow
 
-# Registry of available LLM clients
-LLM_CLIENTS: Dict[str, Type] = {
-    "OpenAIClient": OpenAIClient,
-    # "GemmaClient": GemmaClient,
-    # "DeepSeekClient": DeepSeekClient,
+# Model registry: maps short model names to (client_class, full_model_id)
+MODELS: Dict[str, tuple[Type, str]] = {
+    # Anthropic models (Bedrock)
+    "claude-sonnet": (BedrockClient, "anthropic.claude-3-5-sonnet-20241022-v2:0"),
+    "claude-haiku": (BedrockClient, "anthropic.claude-3-haiku-20240307-v1:0"),
+    # Meta Llama models (Bedrock)
+    "llama-70b": (BedrockClient, "us.meta.llama3-3-70b-instruct-v1:0"),
+    "llama-3b": (BedrockClient, "us.meta.llama3-2-3b-instruct-v1:0"),
+    # Mistral models (Bedrock)
+    "mistral-large": (BedrockClient, "mistral.mistral-large-2407-v1:0"),
+    # Local Ollama models
+    "gemma3": (GemmaClient, "gemma3"),
+    "deepseek-r1": (DeepSeekClient, "deepseek-r1:8b"),
+    "gpt-oss-20b": (OpenAIClient, "gpt-oss:20b"),
 }
 
 
@@ -158,6 +167,12 @@ def main():
         description="Test LLM clients with a specific test case YAML file"
     )
     parser.add_argument(
+        "model",
+        type=str,
+        choices=list(MODELS.keys()),
+        help=f"Model to use. Available: {', '.join(MODELS.keys())}"
+    )
+    parser.add_argument(
         "test_case",
         type=str,
         help="Path to the test case YAML file (e.g., test_cases/digital_wallet.yaml)"
@@ -175,10 +190,20 @@ def main():
         print(f"❌ Error loading test case: {e}")
         return 1
     
-    # Initialize clients
-    clients = {}
-    for client_name, client_class in LLM_CLIENTS.items():
-        clients[client_name] = client_class()
+    # Get model configuration
+    client_class, model_id = MODELS[args.model]
+    
+    # Initialize the client with the model
+    client = client_class(model=model_id)
+    
+    clients = {
+        args.model: client
+    }
+    
+    print(f"🔧 Using {client_class.__name__} with model: {model_id}")
+    if client_class == BedrockClient:
+        print(f"🌍 Region: {client.region_name}")
+        print(f"🔑 Using AWS_BEARER_TOKEN_BEDROCK environment variable")
     
     # Run the test case
     run_test_case(test_case, clients)
