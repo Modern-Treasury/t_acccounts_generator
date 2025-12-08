@@ -8,7 +8,7 @@ import argparse
 import yaml
 from pathlib import Path
 from typing import Any, Dict, Type
-from clients import OpenAIClient, GemmaClient, DeepSeekClient, BedrockClient
+from clients import OllamaClient, GemmaClient, DeepSeekClient, BedrockClient
 from models import ChartOfAccounts, FundFlow
 
 # Model registry: maps short model names to (client_class, full_model_id)
@@ -24,7 +24,7 @@ MODELS: Dict[str, tuple[Type, str]] = {
     # Local Ollama models
     "gemma3": (GemmaClient, "gemma3"),
     "deepseek-r1": (DeepSeekClient, "deepseek-r1:8b"),
-    "gpt-oss-20b": (OpenAIClient, "gpt-oss:20b"),
+    "gpt-oss-20b": (OllamaClient, "gpt-oss:20b"),
 }
 
 
