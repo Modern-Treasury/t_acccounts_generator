@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "anthropic>=0.75.0",
     "boto3>=1.40.69",
     "google-genai>=1.54.0",
     "ollama>=0.6.0",

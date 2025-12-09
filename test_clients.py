@@ -8,7 +8,7 @@ import argparse
 import yaml
 from pathlib import Path
 from typing import Any, Dict, Type
-from clients import OpenAIClient, GeminiClient, OllamaClient, GemmaClient, DeepSeekClient, BedrockClient
+from clients import OpenAIClient, GeminiClient, AnthropicClient, OllamaClient, GemmaClient, DeepSeekClient, BedrockClient
 from models import ChartOfAccounts, FundFlow
 
 # Model registry: maps short model names to (client_class, full_model_id)
@@ -19,6 +19,9 @@ MODELS: Dict[str, tuple[Type, str]] = {
     # Google Gemini models
     "gemini-2.5-flash": (GeminiClient, "gemini-2.5-flash"),
     "gemini-3-pro-preview": (GeminiClient, "gemini-3-pro-preview"),
+    # Anthropic models (direct API)
+    "claude-sonnet-4.5": (AnthropicClient, "claude-sonnet-4-5"),
+    "claude-opus-4.5": (AnthropicClient, "claude-opus-4-5"),
     # Anthropic models (Bedrock)
     "claude-sonnet": (BedrockClient, "anthropic.claude-3-5-sonnet-20241022-v2:0"),
     "claude-haiku": (BedrockClient, "anthropic.claude-3-haiku-20240307-v1:0"),
@@ -214,6 +217,8 @@ def main():
         print(f"🔑 Using OPENAI_API_KEY environment variable")
     elif client_class == GeminiClient:
         print(f"🔑 Using GEMINI_API_KEY environment variable")
+    elif client_class == AnthropicClient:
+        print(f"🔑 Using ANTHROPIC_API_KEY environment variable")
     
     # Run the test case
     run_test_case(test_case, clients)
