@@ -8,7 +8,7 @@ import argparse
 import yaml
 from pathlib import Path
 from typing import Any, Dict, Type
-from clients import OpenAIClient, OllamaClient, GemmaClient, DeepSeekClient, BedrockClient
+from clients import OpenAIClient, GeminiClient, OllamaClient, GemmaClient, DeepSeekClient, BedrockClient
 from models import ChartOfAccounts, FundFlow
 
 # Model registry: maps short model names to (client_class, full_model_id)
@@ -16,6 +16,9 @@ MODELS: Dict[str, tuple[Type, str]] = {
     # OpenAI models
     "gpt-5-nano": (OpenAIClient, "gpt-5-nano"),
     "gpt-5.1": (OpenAIClient, "gpt-5.1"),
+    # Google Gemini models
+    "gemini-2.5-flash": (GeminiClient, "gemini-2.5-flash"),
+    "gemini-3-pro-preview": (GeminiClient, "gemini-3-pro-preview"),
     # Anthropic models (Bedrock)
     "claude-sonnet": (BedrockClient, "anthropic.claude-3-5-sonnet-20241022-v2:0"),
     "claude-haiku": (BedrockClient, "anthropic.claude-3-haiku-20240307-v1:0"),
@@ -209,6 +212,8 @@ def main():
         print(f"🔑 Using AWS_BEARER_TOKEN_BEDROCK environment variable")
     elif client_class == OpenAIClient:
         print(f"🔑 Using OPENAI_API_KEY environment variable")
+    elif client_class == GeminiClient:
+        print(f"🔑 Using GEMINI_API_KEY environment variable")
     
     # Run the test case
     run_test_case(test_case, clients)
