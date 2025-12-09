@@ -15,6 +15,7 @@ from models import ChartOfAccounts, FundFlow
 MODELS: Dict[str, tuple[Type, str]] = {
     # OpenAI models
     "gpt-5-nano": (OpenAIClient, "gpt-5-nano"),
+    "gpt-5.1": (OpenAIClient, "gpt-5.1"),
     # Anthropic models (Bedrock)
     "claude-sonnet": (BedrockClient, "anthropic.claude-3-5-sonnet-20241022-v2:0"),
     "claude-haiku": (BedrockClient, "anthropic.claude-3-haiku-20240307-v1:0"),
