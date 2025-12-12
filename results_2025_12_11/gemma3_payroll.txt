@@ -1,0 +1,66 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: payroll.yaml
+  ✅ Loaded: payroll.yaml
+🔧 Using GemmaClient with model: gemma3
+
+============================================================
+🧪 Running Test Case: payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gemma3 [payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Cash - Platform
+        Description: Primary holding account for all platform transactions (USD)
+        Currency: USD | Normal Balance: debit
+      Account 2: Accounts Receivable - Employer 1
+        Description: Amount owed by Employer 1 for payroll services (USD)
+        Currency: USD | Normal Balance: credit
+      Account 3: Accounts Receivable - Employer 2
+        Description: Amount owed by Employer 2 for payroll services (USD)
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee Wages - Employee 1 - Employer 1
+        Description: Wages owed to Employee 1 at Employer 1 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 5: Employee Wages - Employee 1 - Employer 2
+        Description: Wages owed to Employee 1 at Employer 2 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 6: Employee Wages - Employee 2 - Employer 1
+        Description: Wages owed to Employee 2 at Employer 1 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 7: Employee Wages - Employee 2 - Employer 2
+        Description: Wages owed to Employee 2 at Employer 2 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 8: Employer Payments Received
+        Description: Total amount received from employers (USD)
+        Currency: USD | Normal Balance: debit
+      Account 9: Employee Payouts - Employee 1 - Employer 1
+        Description: Amount paid to Employee 1 at Employer 1 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 10: Employee Payouts - Employee 1 - Employer 2
+        Description: Amount paid to Employee 1 at Employer 2 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 11: Employee Payouts - Employee 2 - Employer 1
+        Description: Amount paid to Employee 2 at Employer 1 (USD)
+        Currency: USD | Normal Balance: debit
+      Account 12: Employee Payouts - Employee 2 - Employer 2
+        Description: Amount paid to Employee 2 at Employer 2 (USD)
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Employee Wages - Employer 1 Owed
+        Entry 1: Account=Employee Wages - Employee 1 - Employer 1, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Accounts Receivable - Employer 1, Direction=credit, Amount=1000 USD
+      Transaction 2: Platform Pays Payroll
+        Entry 1: Account=Cash - Platform, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Accounts Receivable - Employer 1, Direction=debit, Amount=1000 USD
+      Transaction 3: Platform Pays Payroll
+        Entry 1: Account=Cash - Platform, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Accounts Receivable - Employer 1, Direction=debit, Amount=1000 USD
+

@@ -1,0 +1,57 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: digital_wallet.yaml
+  ✅ Loaded: digital_wallet.yaml
+🔧 Using GemmaClient with model: gemma3
+
+============================================================
+🧪 Running Test Case: digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Include acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gemma3 [digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: User Account - User 1 - Balance
+        Description: Balance held in the digital wallet account for User 1.
+        Currency: USD | Normal Balance: debit
+      Account 2: User Account - User 2 - Balance
+        Description: Balance held in the digital wallet account for User 2.
+        Currency: USD | Normal Balance: debit
+      Account 3: FBO Account - [FBO Provider Name] - Balance
+        Description: Balance held in the underlying Foreign Bank Outlets (FBO) account.
+        Currency: USD | Normal Balance: debit
+      Account 4: Transaction Fees Revenue
+        Description: Revenue generated from transaction fees.
+        Currency: USD | Normal Balance: credit
+      Account 5: Settlement Revenue - [FBO Provider Name]
+        Description: Revenue received from settlements processed through the FBO account.
+        Currency: USD | Normal Balance: credit
+      Account 6: Operating Expenses - Payment Processor Fees
+        Description: Fees paid to the payment processor for facilitating transactions.
+        Currency: USD | Normal Balance: credit
+      Account 7: Operating Expenses - Customer Support
+        Description: Expenses related to customer support.
+        Currency: USD | Normal Balance: credit
+      Account 8: Operating Expenses - Marketing & Advertising
+        Description: Expenses related to marketing and advertising.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User 1 Deposits $100 into Digital Wallet
+        Entry 1: Account=User Account - User 1, Direction=debit, Amount=100 USD
+        Entry 2: Account=Transaction Fees Revenue, Direction=credit, Amount=0 USD
+      Transaction 2: User 1 Sends $5 to User 2
+        Entry 1: Account=User Account - User 1, Direction=debit, Amount=5 USD
+        Entry 2: Account=User Account - User 2, Direction=credit, Amount=5 USD
+        Entry 3: Account=Transaction Fees Revenue, Direction=credit, Amount=0 USD
+      Transaction 3: User 2 Withdraws $5 to Bank Account
+        Entry 1: Account=User Account - User 2, Direction=credit, Amount=5 USD
+        Entry 2: Account=FBO Account - [FBO Provider Name], Direction=debit, Amount=5 USD
+        Entry 3: Account=Operating Expenses - Payment Processor Fees, Direction=credit, Amount=0 USD
+

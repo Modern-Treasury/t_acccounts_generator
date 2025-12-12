@@ -1,0 +1,41 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: digital_wallet.yaml
+  ✅ Loaded: digital_wallet.yaml
+🔧 Using GeminiClient with model: gemini-3-pro-preview
+🔑 Using GEMINI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Include acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gemini-3-pro-preview [digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: assets:fbo_cash:usd
+        Description: FBO bank account holding aggregate user funds
+        Currency: USD | Normal Balance: debit
+      Account 2: liabilities:user_wallets:user_a
+        Description: Liability account representing funds owed to User A
+        Currency: USD | Normal Balance: credit
+      Account 3: liabilities:user_wallets:user_b
+        Description: Liability account representing funds owed to User B
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User A deposits $100 into digital wallet
+        Entry 1: Account=assets:fbo_cash:usd, Direction=debit, Amount=100 USD
+        Entry 2: Account=liabilities:user_wallets:user_a, Direction=credit, Amount=100 USD
+      Transaction 2: User A sends $5 to User B
+        Entry 1: Account=liabilities:user_wallets:user_a, Direction=debit, Amount=5 USD
+        Entry 2: Account=liabilities:user_wallets:user_b, Direction=credit, Amount=5 USD
+      Transaction 3: User B withdraws $5 to bank account
+        Entry 1: Account=liabilities:user_wallets:user_b, Direction=debit, Amount=5 USD
+        Entry 2: Account=assets:fbo_cash:usd, Direction=credit, Amount=5 USD
+

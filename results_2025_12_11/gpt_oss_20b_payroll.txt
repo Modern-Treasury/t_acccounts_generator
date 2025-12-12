@@ -1,0 +1,57 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: payroll.yaml
+  ✅ Loaded: payroll.yaml
+🔧 Using OllamaClient with model: gpt-oss:20b
+
+============================================================
+🧪 Running Test Case: payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gpt-oss-20b [payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Cash
+        Description: Cash balance of the payroll platform
+        Currency: USD | Normal Balance: debit
+      Account 2: Employer1 Pay-in Liability
+        Description: Liability for funds received from Employer 1 pending employee payouts
+        Currency: USD | Normal Balance: credit
+      Account 3: Employer2 Pay-in Liability
+        Description: Liability for funds received from Employer 2 pending employee payouts
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee1 Wages Owed
+        Description: Wages owed to Employee 1
+        Currency: USD | Normal Balance: credit
+      Account 5: Employee2 Wages Owed
+        Description: Wages owed to Employee 2
+        Currency: USD | Normal Balance: credit
+      Account 6: Employee3 Wages Owed
+        Description: Wages owed to Employee 3
+        Currency: USD | Normal Balance: credit
+      Account 7: Employee4 Wages Owed
+        Description: Wages owed to Employee 4
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Employer 1 pays platform to fund payroll
+        Entry 1: Account=Cash, Direction=debit, Amount=4000 USD
+        Entry 2: Account=Employer1 Pay-in Liability, Direction=credit, Amount=4000 USD
+      Transaction 2: Record wages owed to employees
+        Entry 1: Account=Employer1 Pay-in Liability, Direction=debit, Amount=4000 USD
+        Entry 2: Account=Employee1 Wages Owed, Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee2 Wages Owed, Direction=credit, Amount=1000 USD
+        Entry 4: Account=Employee3 Wages Owed, Direction=credit, Amount=1000 USD
+        Entry 5: Account=Employee4 Wages Owed, Direction=credit, Amount=1000 USD
+      Transaction 3: Platform pays employees their wages
+        Entry 1: Account=Employee1 Wages Owed, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employee2 Wages Owed, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Employee3 Wages Owed, Direction=debit, Amount=1000 USD
+        Entry 4: Account=Employee4 Wages Owed, Direction=debit, Amount=1000 USD
+        Entry 5: Account=Cash, Direction=credit, Amount=4000 USD
+

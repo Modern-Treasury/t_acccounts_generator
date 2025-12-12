@@ -1,0 +1,60 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: payroll.yaml
+  ✅ Loaded: payroll.yaml
+🔧 Using OpenAIClient with model: gpt-5.2
+🔑 Using OPENAI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gpt-5.2 [payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Employer 1 - Pay-in Receivable
+        Description: Debit account representing funds due from Employer 1 (amounts the employer is obligated to pay in).
+        Currency: USD | Normal Balance: debit
+      Account 2: Employer 2 - Pay-in Receivable
+        Description: Debit account representing funds due from Employer 2 (amounts the employer is obligated to pay in).
+        Currency: USD | Normal Balance: debit
+      Account 3: Employer Pay-ins Clearing (Cash)
+        Description: Debit account representing USD funds received from employers and held by the platform before being paid out to employees.
+        Currency: USD | Normal Balance: debit
+      Account 4: Employer 1 - Wages Payable to Employees
+        Description: Credit account representing wages owed to Employer 1 employees in aggregate (liability until paid out).
+        Currency: USD | Normal Balance: credit
+      Account 5: Employer 2 - Wages Payable to Employees
+        Description: Credit account representing wages owed to Employer 2 employees in aggregate (liability until paid out).
+        Currency: USD | Normal Balance: credit
+      Account 6: Employee 1A - Wages Payable
+        Description: Credit account representing wages owed to Employer 1, Employee A (liability until paid out).
+        Currency: USD | Normal Balance: credit
+      Account 7: Employee 1B - Wages Payable
+        Description: Credit account representing wages owed to Employer 1, Employee B (liability until paid out).
+        Currency: USD | Normal Balance: credit
+      Account 8: Employee 2A - Wages Payable
+        Description: Credit account representing wages owed to Employer 2, Employee A (liability until paid out).
+        Currency: USD | Normal Balance: credit
+      Account 9: Employee 2B - Wages Payable
+        Description: Credit account representing wages owed to Employer 2, Employee B (liability until paid out).
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Accrue Employer 1 wages owed to employees (Employee 1A and 1B at $1,000 each) and set up employer pay-in receivable
+        Entry 1: Account=Employer 1 - Pay-in Receivable, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employee 1A - Wages Payable, Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee 1B - Wages Payable, Direction=credit, Amount=1000 USD
+      Transaction 2: Employer 1 funds payroll to the platform (cash received and receivable cleared)
+        Entry 1: Account=Employer Pay-ins Clearing (Cash), Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employer 1 - Pay-in Receivable, Direction=credit, Amount=2000 USD
+      Transaction 3: Platform pays Employer 1 employees their wages from clearing cash (settle wage payables)
+        Entry 1: Account=Employee 1A - Wages Payable, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employee 1B - Wages Payable, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Employer Pay-ins Clearing (Cash), Direction=credit, Amount=2000 USD
+

@@ -1,0 +1,48 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_payroll.yaml
+  ✅ Loaded: simple_payroll.yaml
+🔧 Using OpenAIClient with model: gpt-5.2
+🔑 Using OPENAI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: simple_payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gpt-5.2 [simple_payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Employer 1 - Cash (Pay-ins Clearing)
+        Description: USD funds received from Employer 1 to fund payroll. Used to record employer pay-ins before/while they are available for employee payouts.
+        Currency: USD | Normal Balance: debit
+      Account 2: Wages Payable - Employer 1 (Liability to Employees)
+        Description: USD wages owed to Employer 1's employees in aggregate. Credited when wages are accrued/owed; debited when paid out to employees.
+        Currency: USD | Normal Balance: credit
+      Account 3: Employee 1 - Payouts Payable
+        Description: USD liability for amounts due to Employee 1. Credited when Employee 1's wages are allocated/owed; debited when paid out.
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee 2 - Payouts Payable
+        Description: USD liability for amounts due to Employee 2. Credited when Employee 2's wages are allocated/owed; debited when paid out.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Accrue wages owed: $1,000 to Employee 1 and $1,000 to Employee 2 (aggregate $2,000)
+        Entry 1: Account=Wages Payable - Employer 1 (Liability to Employees), Direction=credit, Amount=2000 USD
+        Entry 2: Account=Employee 1 - Payouts Payable, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Employee 1 - Payouts Payable, Direction=credit, Amount=1000 USD
+        Entry 4: Account=Employee 2 - Payouts Payable, Direction=debit, Amount=1000 USD
+        Entry 5: Account=Employee 2 - Payouts Payable, Direction=credit, Amount=1000 USD
+      Transaction 2: Employer 1 funds payroll by paying the platform $2,000
+        Entry 1: Account=Employer 1 - Cash (Pay-ins Clearing), Direction=debit, Amount=2000 USD
+        Entry 2: Account=Wages Payable - Employer 1 (Liability to Employees), Direction=debit, Amount=2000 USD
+      Transaction 3: Platform pays out wages to employees ($1,000 each)
+        Entry 1: Account=Employee 1 - Payouts Payable, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employer 1 - Cash (Pay-ins Clearing), Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee 2 - Payouts Payable, Direction=debit, Amount=1000 USD
+        Entry 4: Account=Employer 1 - Cash (Pay-ins Clearing), Direction=credit, Amount=1000 USD
+

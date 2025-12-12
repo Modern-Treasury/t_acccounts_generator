@@ -1,0 +1,45 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_payroll.yaml
+  ✅ Loaded: simple_payroll.yaml
+🔧 Using GeminiClient with model: gemini-3-pro-preview
+🔑 Using GEMINI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: simple_payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gemini-3-pro-preview [simple_payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Platform Cash
+        Description: Asset account representing funds held by the platform in a bank account.
+        Currency: USD | Normal Balance: debit
+      Account 2: Employer Balance
+        Description: Liability account tracking funds received from the employer for payroll purposes.
+        Currency: USD | Normal Balance: credit
+      Account 3: Employee 1 Balance
+        Description: Liability account tracking wages owed to the first employee.
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee 2 Balance
+        Description: Liability account tracking wages owed to the second employee.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Employer funds payroll
+        Entry 1: Account=Platform Cash, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employer Balance, Direction=credit, Amount=2000 USD
+      Transaction 2: Allocation of wages to employees
+        Entry 1: Account=Employer Balance, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employee 1 Balance, Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee 2 Balance, Direction=credit, Amount=1000 USD
+      Transaction 3: Payout of wages to employees
+        Entry 1: Account=Employee 1 Balance, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employee 2 Balance, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Platform Cash, Direction=credit, Amount=2000 USD
+

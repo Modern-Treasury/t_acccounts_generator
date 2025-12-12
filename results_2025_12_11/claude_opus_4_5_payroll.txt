@@ -1,0 +1,54 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: payroll.yaml
+  ✅ Loaded: payroll.yaml
+🔧 Using AnthropicClient with model: claude-opus-4-5
+🔑 Using ANTHROPIC_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- claude-opus-4.5 [payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Employer 1 Funding Account
+        Description: Tracks funds received from Employer 1 to cover payroll obligations
+        Currency: USD | Normal Balance: credit
+      Account 2: Employer 2 Funding Account
+        Description: Tracks funds received from Employer 2 to cover payroll obligations
+        Currency: USD | Normal Balance: credit
+      Account 3: Employee 1A Wages Payable
+        Description: Tracks wages owed to Employee 1A of Employer 1
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee 1B Wages Payable
+        Description: Tracks wages owed to Employee 1B of Employer 1
+        Currency: USD | Normal Balance: credit
+      Account 5: Employee 2A Wages Payable
+        Description: Tracks wages owed to Employee 2A of Employer 2
+        Currency: USD | Normal Balance: credit
+      Account 6: Employee 2B Wages Payable
+        Description: Tracks wages owed to Employee 2B of Employer 2
+        Currency: USD | Normal Balance: credit
+      Account 7: Platform Cash Account
+        Description: Tracks actual cash held by the platform from employer pay-ins and used for employee payouts
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Record wages owed to employees of Employer 1
+        Entry 1: Account=Employer 1 Funding Account, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employee 1A Wages Payable, Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee 1B Wages Payable, Direction=credit, Amount=1000 USD
+      Transaction 2: Employer 1 funds payroll on the platform
+        Entry 1: Account=Platform Cash Account, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employer 1 Funding Account, Direction=credit, Amount=2000 USD
+      Transaction 3: Platform pays employees their wages
+        Entry 1: Account=Employee 1A Wages Payable, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employee 1B Wages Payable, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Platform Cash Account, Direction=credit, Amount=2000 USD
+

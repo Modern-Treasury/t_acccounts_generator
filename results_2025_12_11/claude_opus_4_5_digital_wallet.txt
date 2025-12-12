@@ -1,0 +1,41 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: digital_wallet.yaml
+  ✅ Loaded: digital_wallet.yaml
+🔧 Using AnthropicClient with model: claude-opus-4-5
+🔑 Using ANTHROPIC_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Include acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- claude-opus-4.5 [digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: FBO Cash
+        Description: For Benefit Of (FBO) bank account holding all user funds in custody. This is the master cash account representing actual cash held at the bank on behalf of all users.
+        Currency: USD | Normal Balance: debit
+      Account 2: User 1 Liability
+        Description: Liability account representing funds owed to User 1. Credits increase the balance when user deposits or receives funds, debits decrease when user withdraws or sends funds.
+        Currency: USD | Normal Balance: credit
+      Account 3: User 2 Liability
+        Description: Liability account representing funds owed to User 2. Credits increase the balance when user deposits or receives funds, debits decrease when user withdraws or sends funds.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User 1 deposits $100 into their digital wallet
+        Entry 1: Account=FBO Cash, Direction=debit, Amount=100 USD
+        Entry 2: Account=User 1 Liability, Direction=credit, Amount=100 USD
+      Transaction 2: User 1 sends $5 to User 2
+        Entry 1: Account=User 1 Liability, Direction=debit, Amount=5 USD
+        Entry 2: Account=User 2 Liability, Direction=credit, Amount=5 USD
+      Transaction 3: User 2 withdraws $5 to their bank account
+        Entry 1: Account=User 2 Liability, Direction=debit, Amount=5 USD
+        Entry 2: Account=FBO Cash, Direction=credit, Amount=5 USD
+

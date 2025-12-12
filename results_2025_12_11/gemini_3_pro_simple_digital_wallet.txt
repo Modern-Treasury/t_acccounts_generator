@@ -1,0 +1,35 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_digital_wallet.yaml
+  ✅ Loaded: simple_digital_wallet.yaml
+🔧 Using GeminiClient with model: gemini-3-pro-preview
+🔑 Using GEMINI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: simple_digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Create the ...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gemini-3-pro-preview [simple_digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Settlement Bank Account
+        Description: Asset account representing the omnibus bank account where actual user funds are held.
+        Currency: USD | Normal Balance: debit
+      Account 2: User Wallet Balances
+        Description: Liability account representing the total aggregate obligation owed to users within the platform.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User deposit of $100 USD into digital wallet
+        Entry 1: Account=Settlement Bank Account, Direction=debit, Amount=100 USD
+        Entry 2: Account=User Wallet Balances, Direction=credit, Amount=100 USD
+      Transaction 2: User withdrawal of $5 USD to external bank account
+        Entry 1: Account=User Wallet Balances, Direction=debit, Amount=5 USD
+        Entry 2: Account=Settlement Bank Account, Direction=credit, Amount=5 USD
+

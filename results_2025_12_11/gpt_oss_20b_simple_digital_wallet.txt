@@ -1,0 +1,40 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_digital_wallet.yaml
+  ✅ Loaded: simple_digital_wallet.yaml
+🔧 Using OllamaClient with model: gpt-oss:20b
+
+============================================================
+🧪 Running Test Case: simple_digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Create the ...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gpt-oss-20b [simple_digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Platform Cash
+        Description: Cash held by the platform for operational purposes.
+        Currency: USD | Normal Balance: debit
+      Account 2: User Funds Liability
+        Description: Liability account representing funds held on behalf of users.
+        Currency: USD | Normal Balance: credit
+      Account 3: Transaction Fees Revenue
+        Description: Revenue earned from transaction fees charged to users.
+        Currency: USD | Normal Balance: credit
+      Account 4: Retained Earnings
+        Description: Equity account for accumulated profits retained by the platform.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User deposits $100 into digital wallet
+        Entry 1: Account=Platform Cash, Direction=debit, Amount=100 USD
+        Entry 2: Account=User Funds Liability, Direction=credit, Amount=100 USD
+      Transaction 2: User withdraws $5 to bank account
+        Entry 1: Account=Platform Cash, Direction=credit, Amount=5 USD
+        Entry 2: Account=User Funds Liability, Direction=debit, Amount=5 USD
+

@@ -1,0 +1,31 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: digital_wallet.yaml
+  ✅ Loaded: digital_wallet.yaml
+🔧 Using DeepSeekClient with model: deepseek-r1:8b
+
+============================================================
+🧪 Running Test Case: digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Include acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- deepseek-r1 [digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: FBO User Funds
+        Description: Represents user funds held in an FBO account (for the benefit of users)
+        Currency: USD | Normal Balance: credit
+      Account 2: User Liabilities
+        Description: Represents liabilities to users
+        Currency: USD | Normal Balance: credit
+      Account 3: User A Balance
+        Description: Tracks the balance for User A in the digital wallet
+        Currency: USD | Normal Balance: debit
+      Account 4: User B Balance
+        Description: Tracks the balance for User B in the digital wallet
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...

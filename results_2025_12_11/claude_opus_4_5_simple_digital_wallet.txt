@@ -1,0 +1,41 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_digital_wallet.yaml
+  ✅ Loaded: simple_digital_wallet.yaml
+🔧 Using AnthropicClient with model: claude-opus-4-5
+🔑 Using ANTHROPIC_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: simple_digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Create the ...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- claude-opus-4.5 [simple_digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: User Funds Liability
+        Description: Liability account tracking the total funds held on behalf of users in their digital wallets. Increases when users deposit funds, decreases when users withdraw.
+        Currency: USD | Normal Balance: credit
+      Account 2: Cash
+        Description: Asset account representing actual cash held by the platform in bank accounts to back user deposits.
+        Currency: USD | Normal Balance: debit
+      Account 3: Revenue
+        Description: Income account for fees earned by the platform from transactions, transfers, or other services.
+        Currency: USD | Normal Balance: credit
+      Account 4: Operating Expenses
+        Description: Expense account for costs incurred in running the platform including payment processing fees, bank fees, and operational costs.
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User deposits $100 into their digital wallet
+        Entry 1: Account=Cash, Direction=debit, Amount=100 USD
+        Entry 2: Account=User Funds Liability, Direction=credit, Amount=100 USD
+      Transaction 2: User withdraws $5 from their digital wallet to their bank account
+        Entry 1: Account=User Funds Liability, Direction=debit, Amount=5 USD
+        Entry 2: Account=Cash, Direction=credit, Amount=5 USD
+

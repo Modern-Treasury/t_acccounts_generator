@@ -1,0 +1,45 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_digital_wallet.yaml
+  ✅ Loaded: simple_digital_wallet.yaml
+🔧 Using GemmaClient with model: gemma3
+
+============================================================
+🧪 Running Test Case: simple_digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Create the ...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gemma3 [simple_digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Assets
+        Description: Represents the funds held within the digital wallet.
+        Currency: USD | Normal Balance: debit
+      Account 2: User Deposits
+        Description: Tracks deposits made by users into their wallets.
+        Currency: USD | Normal Balance: debit
+      Account 3: User Withdrawals
+        Description: Tracks withdrawals made by users from their wallets.
+        Currency: USD | Normal Balance: credit
+      Account 4: Fees Revenue
+        Description: Revenue generated from transaction fees.
+        Currency: USD | Normal Balance: credit
+      Account 5: Operating Expenses
+        Description: Expenses related to running the digital wallet platform.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User Deposits $100 into Digital Wallet
+        Entry 1: Account=Assets, Direction=debit, Amount=100 USD
+        Entry 2: Account=User Deposits, Direction=debit, Amount=100 USD
+      Transaction 2: User Withdraws $5 to Bank Account
+        Entry 1: Account=User Deposits, Direction=credit, Amount=5 USD
+        Entry 2: Account=User Withdrawals, Direction=debit, Amount=5 USD
+        Entry 3: Account=Fees Revenue, Direction=credit, Amount=0 USD
+        Entry 4: Account=Operating Expenses, Direction=credit, Amount=0 USD
+

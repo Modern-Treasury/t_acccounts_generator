@@ -1,0 +1,24 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_payroll.yaml
+  ✅ Loaded: simple_payroll.yaml
+🔧 Using DeepSeekClient with model: deepseek-r1:8b
+
+============================================================
+🧪 Running Test Case: simple_payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- deepseek-r1 [simple_payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Cash
+        Description: Available cash balance held by the platform
+        Currency: USD | Normal Balance: debit
+      Account 2: Accrued Wages Payable
+        Description: Wages owed to employees that have been earned but not yet paid
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...

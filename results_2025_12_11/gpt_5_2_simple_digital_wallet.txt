@@ -1,0 +1,35 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_digital_wallet.yaml
+  ✅ Loaded: simple_digital_wallet.yaml
+🔧 Using OpenAIClient with model: gpt-5.2
+🔑 Using OPENAI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: simple_digital_wallet.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a digital wallet platform that holds user funds in USD.
+Create the ...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that represents the business process of a...
+
+--- gpt-5.2 [simple_digital_wallet.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: User Funds Payable (USD)
+        Description: Liability representing the total USD owed to users (aggregate of all wallet balances). Credit for deposits/credits to users; debit for withdrawals/debits from users.
+        Currency: USD | Normal Balance: credit
+      Account 2: Custodial Cash / Bank (USD)
+        Description: Asset representing USD held in bank accounts for the benefit of users (segregated/custodial cash). Debit for incoming funds; credit for outgoing funds.
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: User deposits $100 into their digital wallet (increase custodial cash and increase liability owed to users).
+        Entry 1: Account=Custodial Cash / Bank (USD), Direction=debit, Amount=10000 USD
+        Entry 2: Account=User Funds Payable (USD), Direction=credit, Amount=10000 USD
+      Transaction 2: User withdraws $5 from their digital wallet to their bank account (decrease liability owed to users and decrease custodial cash).
+        Entry 1: Account=User Funds Payable (USD), Direction=debit, Amount=500 USD
+        Entry 2: Account=Custodial Cash / Bank (USD), Direction=credit, Amount=500 USD
+

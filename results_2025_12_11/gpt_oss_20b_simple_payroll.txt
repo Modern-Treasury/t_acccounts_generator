@@ -1,0 +1,37 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_payroll.yaml
+  ✅ Loaded: simple_payroll.yaml
+🔧 Using OllamaClient with model: gpt-oss:20b
+
+============================================================
+🧪 Running Test Case: simple_payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gpt-oss-20b [simple_payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Cash
+        Description: Cash balance of the payroll platform
+        Currency: USD | Normal Balance: debit
+      Account 2: Wages Payable
+        Description: Liability account for wages owed to employees
+        Currency: USD | Normal Balance: credit
+      Account 3: Payroll Expense
+        Description: Expense account for wages paid to employees
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Accrue wages owed to employees
+        Entry 1: Account=Payroll Expense, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Wages Payable, Direction=credit, Amount=1000 USD
+      Transaction 2: Employer pays platform and platform pays employees
+        Entry 1: Account=Cash, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Wages Payable, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Cash, Direction=credit, Amount=1000 USD
+

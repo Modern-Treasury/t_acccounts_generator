@@ -1,0 +1,51 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: simple_payroll.yaml
+  ✅ Loaded: simple_payroll.yaml
+🔧 Using GemmaClient with model: gemma3
+
+============================================================
+🧪 Running Test Case: simple_payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gemma3 [simple_payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Cash - Platform
+        Description: Primary account for holding platform funds received from employers and payouts to employees.
+        Currency: USD | Normal Balance: debit
+      Account 2: Accounts Receivable - Employers
+        Description: Tracks the amount owed by employers for payroll services.
+        Currency: USD | Normal Balance: credit
+      Account 3: Payroll Liabilities - Employee Wages
+        Description: Represents the total wages owed to employees.
+        Currency: USD | Normal Balance: credit
+      Account 4: Payroll Liabilities - Employer Contributions
+        Description: Tracks the total contributions made by employers for payroll taxes and benefits.
+        Currency: USD | Normal Balance: credit
+      Account 5: Payroll Expenses - Employer Taxes
+        Description: Records employer contributions for payroll taxes (e.g., Social Security, Medicare, Unemployment).
+        Currency: USD | Normal Balance: debit
+      Account 6: Payroll Expenses - Benefits
+        Description: Records employer contributions for employee benefits (e.g., health insurance, retirement plans).
+        Currency: USD | Normal Balance: debit
+      Account 7: Bank Account - Platform
+        Description: The platform's bank account for receiving and making payments.
+        Currency: USD | Normal Balance: debit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Employee Wages Payment
+        Entry 1: Account=Payroll Liabilities - Employee Wages, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Cash - Platform, Direction=credit, Amount=1000 USD
+      Transaction 2: Platform Payroll Funding
+        Entry 1: Account=Cash - Platform, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Accounts Receivable - Employers, Direction=credit, Amount=1000 USD
+      Transaction 3: Platform Pays Employees
+        Entry 1: Account=Cash - Platform, Direction=credit, Amount=1000 USD
+        Entry 2: Account=Payroll Liabilities - Employee Wages, Direction=debit, Amount=1000 USD
+

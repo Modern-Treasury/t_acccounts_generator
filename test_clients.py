@@ -15,7 +15,7 @@ from models import ChartOfAccounts, FundFlow
 MODELS: Dict[str, tuple[Type, str]] = {
     # OpenAI models
     "gpt-5-nano": (OpenAIClient, "gpt-5-nano"),
-    "gpt-5.1": (OpenAIClient, "gpt-5.1"),
+    "gpt-5.2": (OpenAIClient, "gpt-5.2"),
     # Google Gemini models
     "gemini-2.5-flash": (GeminiClient, "gemini-2.5-flash"),
     "gemini-3-pro-preview": (GeminiClient, "gemini-3-pro-preview"),

@@ -1,0 +1,54 @@
+🧪 Starting LLM Client Analysis
+============================================================
+📁 Loading test case: payroll.yaml
+  ✅ Loaded: payroll.yaml
+🔧 Using GeminiClient with model: gemini-3-pro-preview
+🔑 Using GEMINI_API_KEY environment variable
+
+============================================================
+🧪 Running Test Case: payroll.yaml
+============================================================
+Prompt 1 (ChartOfAccounts): Generate a chart of accounts for a payroll platform that keeps track of wages owed to employees, acc...
+Prompt 2 (FundFlow): Given the following chart of accounts, generate a FundFlow that includes transactions for the follow...
+
+--- gemini-3-pro-preview [payroll.yaml] ---
+  🔹 Step 1: Generating ChartOfAccounts...
+
+    📋 Account Details:
+      Account 1: Platform Settlement Cash
+        Description: Omnibus bank account holding funds collected from employers before payout to employees.
+        Currency: USD | Normal Balance: debit
+      Account 2: Employer A Pre-funding Balance
+        Description: Liability account tracking funds received from Employer A to fund payroll.
+        Currency: USD | Normal Balance: credit
+      Account 3: Employer B Pre-funding Balance
+        Description: Liability account tracking funds received from Employer B to fund payroll.
+        Currency: USD | Normal Balance: credit
+      Account 4: Employee A-1 Payable
+        Description: Liability account representing wages owed to Employer A's first employee.
+        Currency: USD | Normal Balance: credit
+      Account 5: Employee A-2 Payable
+        Description: Liability account representing wages owed to Employer A's second employee.
+        Currency: USD | Normal Balance: credit
+      Account 6: Employee B-1 Payable
+        Description: Liability account representing wages owed to Employer B's first employee.
+        Currency: USD | Normal Balance: credit
+      Account 7: Employee B-2 Payable
+        Description: Liability account representing wages owed to Employer B's second employee.
+        Currency: USD | Normal Balance: credit
+
+  🔹 Step 2: Generating FundFlow...
+
+    💸 Transaction Details:
+      Transaction 1: Employer A funds payroll wallet
+        Entry 1: Account=Platform Settlement Cash, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employer A Pre-funding Balance, Direction=credit, Amount=2000 USD
+      Transaction 2: Allocation of wages owed to Employer A employees
+        Entry 1: Account=Employer A Pre-funding Balance, Direction=debit, Amount=2000 USD
+        Entry 2: Account=Employee A-1 Payable, Direction=credit, Amount=1000 USD
+        Entry 3: Account=Employee A-2 Payable, Direction=credit, Amount=1000 USD
+      Transaction 3: Platform payout of wages to Employer A employees
+        Entry 1: Account=Employee A-1 Payable, Direction=debit, Amount=1000 USD
+        Entry 2: Account=Employee A-2 Payable, Direction=debit, Amount=1000 USD
+        Entry 3: Account=Platform Settlement Cash, Direction=credit, Amount=2000 USD
+
