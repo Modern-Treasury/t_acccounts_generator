@@ -2,6 +2,8 @@
 
 A Python project for generating structured financial charts of accounts and fund flows using multiple LLMs. Compare how different AI models approach financial accounting problems with a two-step workflow: first generating a chart of accounts, then creating fund flows based on those accounts.
 
+*Disclaimer*: This code is for experimentation and is mostly AI-generated. It should not be used in production.
+
 ## Installation
 
 This project uses `uv` for dependency management. Install dependencies with:
