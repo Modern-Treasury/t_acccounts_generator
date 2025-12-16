@@ -34,8 +34,8 @@ uv run python test_clients.py --help
 ```
 
 The script performs a two-step process:
-1. **Step 1**: Generates a `ChartOfAccounts` from the first prompt
-2. **Step 2**: Generates a `FundFlow` using the chart of accounts from step 1
+1. Generates a `ChartOfAccounts` from the first prompt
+2. Generates a `FundFlow` using the chart of accounts from step 1
 
 ## Test Cases
 
