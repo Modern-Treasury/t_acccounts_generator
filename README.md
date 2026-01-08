@@ -14,8 +14,6 @@ uv sync
 
 ## Usage
 
-The test script uses Amazon Bedrock with the gpt-oss-120b model (us-east-1 region):
-
 ```bash
 # Optionally set API keys (not needed for open source models)
 export AWS_BEARER_TOKEN_BEDROCK=your_api_key
